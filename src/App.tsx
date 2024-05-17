@@ -21,7 +21,7 @@ export const App = () => {
 
   useEffect(() => {
     const fetchNotes = async () => {
-      const { data } = await axios('https://noteservedev.netlify.app/note');
+      const { data } = await axios('http://localhost:8000/note');
       setNotes(data.notes);
     }
     console.log('App rendered')
@@ -33,7 +33,7 @@ export const App = () => {
       <form onSubmit={async (evt) => {
         evt.preventDefault();
         if (selectedNoteId) {
-          const { data } = await axios.patch('https://noteservedev.netlify.app/note/' + selectedNoteId, {
+          const { data } = await axios.patch('http://localhost:8000/note/' + selectedNoteId, {
             title: values.title,
             description: values.description
           })
@@ -48,7 +48,7 @@ export const App = () => {
           setValues({ title: "", description: "" })
           return;
         }
-        const { data } = await axios.post('https://noteservedev.netlify.app/note/create', {
+        const { data } = await axios.post('http://localhost:8000/note/create', {
           title: values.title,
           description: values.description
         })
@@ -102,7 +102,7 @@ export const App = () => {
             onDelete={async () => {
               const result = confirm("Are you sure you want to delete this note?");
               if (result) {
-                await axios.delete('https://noteservedev.netlify.app/note/' + note.id)
+                await axios.delete('http://localhost:8000/note/' + note.id)
                 const updatedNotes = notes.filter(({ id }) => id !== note.id);
                 setNotes([...updatedNotes]);
               }
